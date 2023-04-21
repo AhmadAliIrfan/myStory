@@ -19,8 +19,9 @@ app.use("/uploads", express.static(__dirname + "/uploads"));
 async function registerUser(req, res) {
   const { fName, lName, gender, age, email, username, password } = req.body;
  
-
   const date = new Date();
+
+  console.log(req.body);
 
   let newPath;
 
