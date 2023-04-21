@@ -454,7 +454,7 @@ async function resetPassword(req, res) {
       }
     );
 
-    const link = `http://localhost:3000/password-reset/${newUser._id}`;
+    const link = `https://timely-figolla-5c8633.netlify.app/password-reset/${newUser._id}`;
     const myHtml = `<h2>Hi ${newUser.username}</h2><p>Looks like you forgot your password. Follow this Link to change it. Thank you!</p><p>${link}</p>`;
     await sendEmail(email, "Password Reset", link, myHtml);
 
