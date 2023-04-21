@@ -15,7 +15,7 @@ const db = require("./db");
 const port = process.env.PORT || 3001;
 
 const corsOptions = {
-  origin: "https://melodic-jalebi-c05672.netlify.app",
+  origin: "https://melodic-jalebi-c05672.netlify.app/",
   optionsSuccessStatus: 200,
   credentials: true
 };
