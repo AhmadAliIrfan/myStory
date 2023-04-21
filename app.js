@@ -15,7 +15,7 @@ const db = require("./db");
 const port = process.env.PORT || 3001;
 
 const corsOptions = {
-  origin: "http://localhost:3000",
+  origin: "https://timely-figolla-5c8633.netlify.app/",
   optionsSuccessStatus: 200,
   credentials: true
 };
