@@ -34,7 +34,7 @@ app.use('/uploads', express.static(__dirname + '/uploads'));
 
 
 app.get('/*', function (req, res) {
-   res.sendFile(path.join(__dirname, 'build', 'index.html'));
+   res.sendFile(path.join(__dirname, 'index.html'));
  });
 
 db.on("error", console.error.bind(console, "MonoDB Connection Error:"));
