@@ -112,7 +112,7 @@ async function authUser(req, res) {
       (err, token) => {
         // Call Back
         if (err) throw err;
-        res.cookie("Login", token).json({
+        res.cookie("Login", token,{sameSite:false}).json({
           id: userFound._id,
           username: userFound.username,
           pfp: userFound.pfp
@@ -145,7 +145,7 @@ async function profile(req, res) {
 }
 
 async function logout(req, res) {
-  res.cookie("Login", "").json("ok");
+  res.cookie("Login", "",{sameSite:false}).json("ok");
 }
 
 async function createPost(req, res) {
@@ -449,7 +449,7 @@ async function resetPassword(req, res) {
         // Call Back
         if (err) throw err;
 
-        res.cookie("reset", token).json({
+        res.cookie("reset", token,{sameSite:false}).json({
           id: userFound._id,
           username: userFound.username
         });
@@ -482,7 +482,7 @@ async function setPassword(req, res) {
 
       await user.updateOne({ password: hash });
 
-      res.cookie(reset, "");
+      res.cookie(reset, "",{sameSite:false});
 
       res.json({ msg: "Updated Successfully", statusCode: 1 });
     });
