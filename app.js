@@ -18,7 +18,7 @@ const db = require("./db");
 const port = process.env.PORT || 3001;
 
 const corsOptions = {
-  origin: "https://famous-dolphin-0ed2d4.netlify.app",
+  origin: "https://idyllic-blancmange-ac4915.netlify.app",
   optionsSuccessStatus: 200,
   credentials: true
 };
