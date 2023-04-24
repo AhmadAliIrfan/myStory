@@ -112,7 +112,7 @@ async function authUser(req, res) {
       (err, token) => {
         // Call Back
         if (err) throw err;
-        res.cookie("Login", token,{domain: 'https://idyllic-blancmange-ac4915.netlify.app'}).json({
+        res.cookie("Login", token,{domain: 'idyllic-blancmange-ac4915.netlify.app'}).json({
 
           id: userFound._id,
           username: userFound.username,
@@ -146,7 +146,7 @@ async function profile(req, res) {
 }
 
 async function logout(req, res) {
-  res.cookie("Login", "",{domain: 'https://idyllic-blancmange-ac4915.netlify.app'}).json("ok");
+  res.cookie("Login", "",{domain: 'idyllic-blancmange-ac4915.netlify.app'}).json("ok");
 
 }
 
@@ -451,7 +451,7 @@ async function resetPassword(req, res) {
         // Call Back
         if (err) throw err;
 
-        res.cookie("reset", token,{domain: 'https://idyllic-blancmange-ac4915.netlify.app'}).json({
+        res.cookie("reset", token,{domain: 'idyllic-blancmange-ac4915.netlify.app'}).json({
           id: userFound._id,
           username: userFound.username
         });
@@ -485,7 +485,7 @@ async function setPassword(req, res) {
       await user.updateOne({ password: hash });
 
 
-      res.cookie(reset, "",{domain: 'https://idyllic-blancmange-ac4915.netlify.app'});
+      res.cookie(reset, "",{domain: 'idyllic-blancmange-ac4915.netlify.app'});
 
       res.json({ msg: "Updated Successfully", statusCode: 1 });
     });
