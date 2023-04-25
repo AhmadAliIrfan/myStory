@@ -146,7 +146,7 @@ async function profile(req, res) {
 }
 
 async function logout(req, res) {
-  res.cookie("Login", " ",{sameSite:'None', secure:true}).json("ok");
+  res.cookie("Login", null,{sameSite:'None', secure:true}).json("ok");
 
 }
 
