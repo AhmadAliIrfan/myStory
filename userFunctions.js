@@ -133,7 +133,7 @@ async function profile(req, res) {
 
   const { Login } = req.cookies;
 
-  if (Login === true) {
+  if (Login) {
     jwt.verify(Login, process.env.SECRET_STRING, {}, async (err, info) => {
       if (err) throw err;
 
@@ -158,7 +158,7 @@ async function createPost(req, res) {
   const newPath = path + "." + ext;
   fs.renameSync(path, newPath);
 
-  if (Login === true) {
+  if (Login) {
     jwt.verify(Login, process.env.SECRET_STRING, {}, async (err, info) => {
       if (err) throw err;
 
@@ -223,7 +223,7 @@ async function updatePost(req, res) {
 
   const { Login } = req.cookies;
 
-  if (Login === true) {
+  if (Login) {
     jwt.verify(Login, process.env.SECRET_STRING, {}, async (err, info) => {
       if (err) throw err;
 
@@ -296,7 +296,7 @@ async function dashboardData(req, res) {
   const { id } = req.params;
   const { Login } = req.cookies;
 
-  if (Login === true) {
+  if (Login) {
     jwt.verify(Login, process.env.SECRET_STRING, {}, (err, info) => {
       if (err) {
         throw err;
@@ -317,7 +317,7 @@ async function dashboardData(req, res) {
 async function getUser(req, res) {
   const { Login } = req.cookies;
 
-  if (Login === true) {
+  if (Login) {
     jwt.verify(Login, process.env.SECRET_STRING, {}, async (err, info) => {
       if (err) throw err;
 
@@ -410,7 +410,7 @@ async function editUser(req, res) {
 async function getSavedPosts(req, res) {
   const { Login } = req.cookies;
 
-  if (Login === true) {
+  if (Login) {
     jwt.verify(Login, process.env.SECRET_STRING, {}, async (err, info) => {
       if (err) throw err;
 
@@ -523,6 +523,8 @@ const {old, newPassword, id} = req.body;
 console.log(old);
 console.log(newPassword);
 
+if(Login){
+
 jwt.verify(Login, process.env.SECRET_STRING,{}, async (err, info) =>{
 
 if (err) throw err;
@@ -551,7 +553,11 @@ if(matchPassword){
 res.json({msg:'The Old Password is not correct', statusCode:15});
 
 });
+}else{
 
+res.json({msg:'Token Error', statusCode:15});
+
+}
 
 }
 
