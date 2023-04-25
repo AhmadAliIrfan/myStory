@@ -18,7 +18,7 @@ const db = require("./db");
 const port = process.env.PORT || 3001;
 
 const corsOptions = {
-  origin: "https://calm-froyo-f5ab4e.netlify.app/",
+  origin: "https://calm-froyo-f5ab4e.netlify.app",
   optionsSuccessStatus: 200,
   credentials: true
 };
