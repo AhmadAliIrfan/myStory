@@ -133,7 +133,7 @@ async function profile(req, res) {
 
   const { Login } = req.cookies;
 
-  if (Login) {
+  if (Login === true) {
     jwt.verify(Login, process.env.SECRET_STRING, {}, async (err, info) => {
       if (err) throw err;
 
@@ -146,7 +146,7 @@ async function profile(req, res) {
 }
 
 async function logout(req, res) {
-  res.cookie("Login", "",{sameSite:'None'}).json("ok");
+  res.cookie("Login", "",{sameSite:'None', secure:true}).json("ok");
 
 }
 
@@ -158,7 +158,7 @@ async function createPost(req, res) {
   const newPath = path + "." + ext;
   fs.renameSync(path, newPath);
 
-  if (Login) {
+  if (Login === true) {
     jwt.verify(Login, process.env.SECRET_STRING, {}, async (err, info) => {
       if (err) throw err;
 
@@ -223,7 +223,7 @@ async function updatePost(req, res) {
 
   const { Login } = req.cookies;
 
-  if (Login) {
+  if (Login === true) {
     jwt.verify(Login, process.env.SECRET_STRING, {}, async (err, info) => {
       if (err) throw err;
 
@@ -296,7 +296,7 @@ async function dashboardData(req, res) {
   const { id } = req.params;
   const { Login } = req.cookies;
 
-  if (Login) {
+  if (Login === true) {
     jwt.verify(Login, process.env.SECRET_STRING, {}, (err, info) => {
       if (err) {
         throw err;
@@ -317,7 +317,7 @@ async function dashboardData(req, res) {
 async function getUser(req, res) {
   const { Login } = req.cookies;
 
-  if (Login) {
+  if (Login === true) {
     jwt.verify(Login, process.env.SECRET_STRING, {}, async (err, info) => {
       if (err) throw err;
 
@@ -410,7 +410,7 @@ async function editUser(req, res) {
 async function getSavedPosts(req, res) {
   const { Login } = req.cookies;
 
-  if (Login) {
+  if (Login === true) {
     jwt.verify(Login, process.env.SECRET_STRING, {}, async (err, info) => {
       if (err) throw err;
 
@@ -472,24 +472,30 @@ async function setPassword(req, res) {
   const { reset } = req.cookies;
   const { id, password } = req.body;
 
-  jwt.verify(reset, process.env.SECRET_STRING, {}, async (err, token) => {
-    if (err) throw err;
+  if(reset){
+  
+    jwt.verify(reset, process.env.SECRET_STRING, {}, async (err, token) => {
+      if (err) throw err;
+  
+      const user = await User.findOne({ _id: id });
+  
+      bcrypt.hash(password, 5, async (err, hash) => {
+        if (err) {
+          return res.status(400).json({ msg: "Error: Password was not saved" });
+        }
+  
+        await user.updateOne({ password: hash });
+  
+  
+        res.cookie(reset, "",{sameSite:'None', secure:true});
+  
+        res.json({ msg: "Updated Successfully", statusCode: 1 });
+      });
+    });}else{
 
-    const user = await User.findOne({ _id: id });
+      res.json({ msg: "Error", statusCode: 15 })
 
-    bcrypt.hash(password, 5, async (err, hash) => {
-      if (err) {
-        return res.status(400).json({ msg: "Error: Password was not saved" });
-      }
-
-      await user.updateOne({ password: hash });
-
-
-      res.cookie(reset, "",{sameSite:'None', secure:true});
-
-      res.json({ msg: "Updated Successfully", statusCode: 1 });
-    });
-  });
+    }
 }
 
 async function checkLink(req, res) {
