@@ -21,7 +21,7 @@ const corsOptions = {
 
 
   //https://remarkable-crostata-a4622f.netlify.app
-  origin: "http://localhost:3000",
+  origin: "https://eclectic-banoffee-0c55eb.netlify.app",
   optionsSuccessStatus: 200,
   credentials: true
 };
