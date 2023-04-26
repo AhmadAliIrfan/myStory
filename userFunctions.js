@@ -14,7 +14,7 @@ const { User, Post } = require("./models/post");
 const sendEmail = require("./utils/sendEmail");
 
 app.use(cookieParser());
-app.use("/uploads", express.static(__dirname + "/uploads"));
+//app.use("/uploads", express.static(__dirname + "/uploads"));
 
 
 const storageEngine = multer.diskStorage({
@@ -440,6 +440,7 @@ async function editUser(req, res) {
     res.json("ok");
   } else if (req.file) {
     let newPath;
+    const url = req.protocol + '://' + req.get('host');
   if (req.file) {
     // const { originalname, path } = req.file;
     // const parts = originalname.split(".");
