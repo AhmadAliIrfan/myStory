@@ -16,6 +16,31 @@ const sendEmail = require("./utils/sendEmail");
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
 
+
+const storageEngine = multer.diskStorage({
+destination: "./uploads",
+filename: (req, file, cb) => {
+cb(null, `${Date.now()}--${file.originalname}`);
+},
+});
+
+
+var upload = multer({
+
+storage: storageEngine,
+
+fileFilter: (req, file, cb) => {
+        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
+            cb(null, true);
+        } else {
+            cb(null, false);
+            return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
+        }
+    }
+
+});
+
+
 async function registerUser(req, res) {
   const { fName, lName, gender, age, email, username, password } = req.body;
  
@@ -25,18 +50,22 @@ async function registerUser(req, res) {
 
   let newPath;
 
+  const url = req.protocol + '://' + req.get('host');
+
   if (req.file) {
-    const { originalname, path } = req.file;
-    const parts = originalname.split(".");
-    const ext = parts[parts.length - 1];
-    newPath = path + "." + ext;
-    fs.renameSync(path, newPath);
+    // const { originalname, path } = req.file;
+    // const parts = originalname.split(".");
+    // const ext = parts[parts.length - 1];
+    // newPath = path + "." + ext;
+    // fs.renameSync(path, newPath);
+    newPath = url + '/uploads/' + req.file.filename
+
   } else {
-    newPath = "uploads\\basic.png";
+    newPath = url + "/uploads/basic.png";
   }
 
   const newUser = new User({
-    fName: fName,
+    f Name: fName,
     lName: lName,
     gender: gender,
     age: age,
