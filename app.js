@@ -18,8 +18,10 @@ const db = require("./db");
 const port = process.env.PORT || 3001;
 
 const corsOptions = {
-  
-  origin: "https://remarkable-crostata-a4622f.netlify.app",
+
+
+  //https://remarkable-crostata-a4622f.netlify.app
+  origin: "*",
   optionsSuccessStatus: 200,
   credentials: true
 };
