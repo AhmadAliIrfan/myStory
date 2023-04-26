@@ -65,7 +65,7 @@ async function registerUser(req, res) {
   }
 
   const newUser = new User({
-    f Name: fName,
+    fName: fName,
     lName: lName,
     gender: gender,
     age: age,
@@ -181,11 +181,24 @@ async function logout(req, res) {
 
 async function createPost(req, res) {
   const { Login } = req.cookies;
-  const { originalname, path } = req.file;
-  const parts = originalname.split(".");
-  const ext = parts[parts.length - 1];
-  const newPath = path + "." + ext;
-  fs.renameSync(path, newPath);
+  // const { originalname, path } = req.file;
+  // const parts = originalname.split(".");
+  // const ext = parts[parts.length - 1];
+  // const newPath = path + "." + ext;
+  // fs.renameSync(path, newPath);
+
+  let newPath;
+  const url = req.protocol + '://' + req.get('host');
+
+  if (req.file) {
+    // const { originalname, path } = req.file;
+    // const parts = originalname.split(".");
+    // const ext = parts[parts.length - 1];
+    // newPath = path + "." + ext;
+    // fs.renameSync(path, newPath);
+    newPath = url + '/uploads/' + req.file.filename
+
+  } 
 
   if (Login) {
     jwt.verify(Login, process.env.SECRET_STRING, {}, async (err, info) => {
@@ -242,14 +255,18 @@ async function getPost(req, res) {
 async function updatePost(req, res) {
   let newPath = null;
 
-  if (req.file) {
-    const { originalname, path } = req.file;
-    const parts = originalname.split(".");
-    const ext = parts[parts.length - 1];
-    newPath = path + "." + ext;
-    fs.renameSync(path, newPath);
-  }
+const url = req.protocol + '://' + req.get('host');
 
+  if (req.file) {
+    // const { originalname, path } = req.file;
+    // const parts = originalname.split(".");
+    // const ext = parts[parts.length - 1];
+    // newPath = path + "." + ext;
+    // fs.renameSync(path, newPath);
+    newPath = url + '/uploads/' + req.file.filename
+
+  }
+  
   const { Login } = req.cookies;
 
   if (Login) {
@@ -425,11 +442,15 @@ async function editUser(req, res) {
     res.json("ok");
   } else if (req.file) {
     let newPath;
-    const { originalname, path } = req.file;
-    const parts = originalname.split(".");
-    const ext = parts[parts.length - 1];
-    newPath = path + "." + ext;
-    fs.renameSync(path, newPath);
+  if (req.file) {
+    // const { originalname, path } = req.file;
+    // const parts = originalname.split(".");
+    // const ext = parts[parts.length - 1];
+    // newPath = path + "." + ext;
+    // fs.renameSync(path, newPath);
+    newPath = url + '/uploads/' + req.file.filename
+
+  }
 
     await user.updateOne({ pfp: newPath });
     res.json("ok");
