@@ -51,12 +51,12 @@ async function registerUser(req, res) {
   const url = req.protocol + '://' + req.get('host');
 
   if (req.file) {
-    // const { originalname, path } = req.file;
-    // const parts = originalname.split(".");
-    // const ext = parts[parts.length - 1];
-    // newPath = path + "." + ext;
+    const { originalname, path } = req.file;
+    const parts = originalname.split(".");
+    const ext = parts[parts.length - 1];
+    //newPath = path + "." + ext;
     // fs.renameSync(path, newPath);
-    newPath = url + '/uploads/' + req.file.filename
+    newPath ='uploads/' + req.file.filename + '.' +ext;
 
   } else {
     newPath = url + "/uploads/basic.png";
