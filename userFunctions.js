@@ -56,7 +56,7 @@ async function registerUser(req, res) {
   const myEmail = await User.findOne({ email: email });
 
   if (myUser || myEmail) {
-    return res.status(400).json({ msg: "Username or Email Already Exists" });
+    return res.status(200).json({ msg: "Username or Email Already Exists", errorCode:37 });
   }
 
   bcrypt.hash(password, 5, async (err, hash) => {
