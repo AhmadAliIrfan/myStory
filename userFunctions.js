@@ -7,7 +7,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
+//const upload = multer({ dest: "uploads/" });
 const fs = require("fs");
 const Comment = require("./models/comment");
 const { User, Post } = require("./models/post");
@@ -45,8 +45,6 @@ async function registerUser(req, res) {
   const { fName, lName, gender, age, email, username, password } = req.body;
  
   const date = new Date();
-
-  console.log(req.body);
 
   let newPath;
 
@@ -266,7 +264,7 @@ const url = req.protocol + '://' + req.get('host');
     newPath = url + '/uploads/' + req.file.filename
 
   }
-  
+
   const { Login } = req.cookies;
 
   if (Login) {
