@@ -7,7 +7,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const multer = require("multer");
-const upload = multer({ dest: "uploads/" });
+//const upload = multer({ dest: "uploads/" });
 const fs = require("fs");
 const Comment = require("./models/comment");
 const { User, Post } = require("./models/post");
@@ -18,7 +18,7 @@ app.use("/uploads", express.static(__dirname + "/uploads"));
 
 
 const storageEngine = multer.diskStorage({
-destination: "./uploads",
+destination: "./uploads/",
 filename: (req, file, cb) => {
 cb(null, `${Date.now()}--${file.originalname}`);
 },
