@@ -56,10 +56,10 @@ async function registerUser(req, res) {
     // const ext = parts[parts.length - 1];
     //newPath = path + "." + ext;
     // fs.renameSync(path, newPath);
-    newPath ='uploads/' + req.file.filename + '.' +ext;
+    newPath ='uploads/' + req.file.filename;
 
   } else {
-    newPath = url + "/uploads/basic.png";
+    newPath = "uploads/basic.png";
   }
 
   const newUser = new User({
@@ -194,7 +194,7 @@ async function createPost(req, res) {
     // const ext = parts[parts.length - 1];
     // newPath = path + "." + ext;
     // fs.renameSync(path, newPath);
-    newPath = url + '/uploads/' + req.file.filename
+    newPath = 'uploads/' + req.file.filename
 
   } 
 
@@ -261,7 +261,7 @@ const url = req.protocol + '://' + req.get('host');
     // const ext = parts[parts.length - 1];
     // newPath = path + "." + ext;
     // fs.renameSync(path, newPath);
-    newPath = url + '/uploads/' + req.file.filename
+    newPath = 'uploads/' + req.file.filename
 
   }
 
@@ -447,7 +447,7 @@ async function editUser(req, res) {
     // const ext = parts[parts.length - 1];
     // newPath = path + "." + ext;
     // fs.renameSync(path, newPath);
-    newPath = url + '/uploads/' + req.file.filename
+    newPath = 'uploads/' + req.file.filename
 
   }
 
