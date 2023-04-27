@@ -21,7 +21,7 @@ const corsOptions = {
 
 
   //https://remarkable-crostata-a4622f.netlify.app
-  origin: "https://adorable-twilight-a6b863.netlify.app",
+  origin: "https://adorable-twilight-a6b863.netlify.app" || 'http://localhost:3000',
   optionsSuccessStatus: 200,
   credentials: true
 };

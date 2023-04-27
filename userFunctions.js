@@ -56,7 +56,7 @@ async function registerUser(req, res) {
     // const ext = parts[parts.length - 1];
     //newPath = path + "." + ext;
     // fs.renameSync(path, newPath);
-    newPath ='uploads/' + req.file.filename;
+    newPath =url +'uploads/' + req.file.filename;
 
   } else {
     newPath = url + "/uploads/basic.png";
