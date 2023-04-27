@@ -7,14 +7,14 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const multer = require("multer");
-//const upload = multer({ dest: "uploads/" });
+const upload = multer({ dest: "uploads/" });
 const fs = require("fs");
 const Comment = require("./models/comment");
 const { User, Post } = require("./models/post");
 const sendEmail = require("./utils/sendEmail");
 
 app.use(cookieParser());
-//app.use("/uploads", express.static(__dirname + "/uploads"));
+app.use("/uploads", express.static(__dirname + "/uploads"));
 
 
 const storageEngine = multer.diskStorage({
@@ -51,9 +51,9 @@ async function registerUser(req, res) {
   const url = req.protocol + '://' + req.get('host');
 
   if (req.file) {
-    const { originalname, path } = req.file;
-    const parts = originalname.split(".");
-    const ext = parts[parts.length - 1];
+    // const { originalname, path } = req.file;
+    // const parts = originalname.split(".");
+    // const ext = parts[parts.length - 1];
     //newPath = path + "." + ext;
     // fs.renameSync(path, newPath);
     newPath ='uploads/' + req.file.filename + '.' +ext;
