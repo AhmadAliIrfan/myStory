@@ -145,7 +145,7 @@ async function authUser(req, res) {
           username: userFound.username,
           pfp: userFound.pfp
         });
-      
+
       }
     );
   } else {
@@ -508,7 +508,7 @@ async function resetPassword(req, res) {
       }
     );
 
-    const link = `https://melodic-jalebi-c05672.netlify.app/password-reset/${newUser._id}`;
+    const link = `https://lucky-basbousa-37873c.netlify.app/password-reset/${newUser._id}`;
     const myHtml = `<h2>Hi ${newUser.username}</h2><p>Looks like you forgot your password. Follow this Link to change it. Thank you!</p><p>${link}</p>`;
     await sendEmail(email, "Password Reset", link, myHtml);
 
