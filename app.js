@@ -24,7 +24,7 @@ const corsOptions = {
   //"https://adorable-twilight-a6b863.netlify.app"
   //http://localhost:3000
   //https://cheerful-lollipop-79dc13.netlify.app
-  origin:  'https://lucky-basbousa-37873c.netlify.app',
+  origin:  'https://exquisite-stroopwafel-0dc817.netlify.app',
   optionsSuccessStatus: 200,
   credentials: true
 };
