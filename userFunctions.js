@@ -108,6 +108,7 @@ async function authUser(req, res) {
   const data = req.body; // Getting Request Data
   var userFound;
   const email = await User.findOne({ email: data.email }); //Searching via Email
+  console.log(email);
   const user = await User.findOne({ username: data.username }); //Searching via Username
 
   if (!user && !email) {
@@ -608,6 +609,15 @@ res.json({msg:'The Old Password is not correct', statusCode:15});
 res.json({msg:'Token Error', statusCode:15});
 
 }
+
+}
+
+
+function profilePic(req, res){
+
+
+
+
 
 }
 
