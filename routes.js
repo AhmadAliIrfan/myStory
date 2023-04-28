@@ -20,7 +20,8 @@ const {
   resetPassword,
   setPassword,
   checkLink,
-  newPassword
+  newPassword,
+  profilePic
 } = require("./userFunctions");
 const express = require("express");
 const router = express.Router();
@@ -51,5 +52,7 @@ router.post('/resetPassword', resetPassword);
 router.post('/reset-password/:id', setPassword);
 router.post('/reset-password', newPassword)
 router.get('/link', checkLink);
+route.get('/profilepic',profilePic);
+
 
 module.exports = router;

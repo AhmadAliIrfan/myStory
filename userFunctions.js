@@ -612,10 +612,32 @@ res.json({msg:'Token Error', statusCode:15});
 }
 
 
-function profilePic(req, res){
+async function profilePic(req, res){
+
+  const { Login } = req.cookies;
+
+  if(Login){
+
+    jwt.verify(Login, process.env.SECRET_STRING,{}, async (err,info)=>{
+
+      if (err) throw err
+
+        const user = await User.findOne({_id:info.id});
+
+
+        res.json(user.pfp);
+
+
+    });
 
 
 
+  }else{
+
+    res.json(0);
+
+
+  }
 
 
 }
@@ -642,5 +664,6 @@ module.exports = {
   resetPassword,
   setPassword,
   checkLink,
-  newPassword
+  newPassword,
+  profilePic
 };
