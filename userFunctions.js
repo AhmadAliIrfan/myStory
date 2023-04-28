@@ -107,8 +107,7 @@ async function authUser(req, res) {
   // Checking Login
   const data = req.body; // Getting Request Data
   var userFound;
-  console.log(req.body);
-  const email = await User.findOne({ email: data.email }); //Searching via Email
+  const email = await User.findOne({ email: data.username }); //Searching via Email
   const user = await User.findOne({ username: data.username }); //Searching via Username
 
   if (!user && !email) {
