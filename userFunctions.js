@@ -145,6 +145,7 @@ async function authUser(req, res) {
           username: userFound.username,
           pfp: userFound.pfp
         });
+      
       }
     );
   } else {
