@@ -23,7 +23,8 @@ const corsOptions = {
   //https://remarkable-crostata-a4622f.netlify.app
   //"https://adorable-twilight-a6b863.netlify.app"
   //http://localhost:3000
-  origin:  'https://cheerful-lollipop-79dc13.netlify.app',
+  //https://cheerful-lollipop-79dc13.netlify.app
+  origin:  'https://lucky-basbousa-37873c.netlify.app',
   optionsSuccessStatus: 200,
   credentials: true
 };
