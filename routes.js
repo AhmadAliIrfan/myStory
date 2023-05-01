@@ -52,7 +52,7 @@ router.post('/resetPassword', resetPassword);
 router.post('/reset-password/:id', setPassword);
 router.post('/reset-password', newPassword)
 router.get('/link', checkLink);
-//router.get('/profilepic',profilePic);
+router.get('/profilepic',profilePic);
 
 
 module.exports = router;
