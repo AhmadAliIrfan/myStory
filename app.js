@@ -19,9 +19,9 @@ const port = process.env.PORT || 3001;
 
 const corsOptions = {
 
-  origin:'https://exquisite-stroopwafel-0dc817.netlify.app',
-  optionsSuccessStatus: 200,
-  credentials: true
+  // origin:'https://exquisite-stroopwafel-0dc817.netlify.app',
+  // optionsSuccessStatus: 200,
+   credentials: true
 };
 
 app.use(bodyParser.urlencoded({ extended: true }));
