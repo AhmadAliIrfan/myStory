@@ -19,15 +19,17 @@ const port = process.env.PORT || 3001;
 
 const corsOptions = {
 
-  // origin:'https://exquisite-stroopwafel-0dc817.netlify.app',
-  // optionsSuccessStatus: 200,
-   credentials: true
+  origin:'https://exquisite-stroopwafel-0dc817.netlify.app',
+  optionsSuccessStatus: 200,
+  credentials: true
 };
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(bodyParser.json());
-app.use(cors(corsOptions));
+app.use(cors({  origin:'https://exquisite-stroopwafel-0dc817.netlify.app',
+  optionsSuccessStatus: 200,
+  credentials: true}));
 app.use(express.json());
 app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
