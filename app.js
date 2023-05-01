@@ -19,11 +19,6 @@ const port = process.env.PORT || 3001;
 
 const corsOptions = {
 
-
-  //https://remarkable-crostata-a4622f.netlify.app
-  //"https://adorable-twilight-a6b863.netlify.app"
-  //http://localhost:3000
-  //https://cheerful-lollipop-79dc13.netlify.app
   origin:'https://exquisite-stroopwafel-0dc817.netlify.app',
   optionsSuccessStatus: 200,
   credentials: true

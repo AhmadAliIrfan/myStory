@@ -16,39 +16,38 @@ const sendEmail = require("./utils/sendEmail");
 app.use(cookieParser());
 app.use("/uploads", express.static(__dirname + "/uploads"));
 
-
 const storageEngine = multer.diskStorage({
-destination: "./uploads/",
-filename: (req, file, cb) => {
-cb(null, `${Date.now()}--${file.originalname}`);
-},
+  destination: "./uploads/",
+  filename: (req, file, cb) => {
+    cb(null, `${Date.now()}--${file.originalname}`);
+  }
 });
-
 
 var upload = multer({
+  storage: storageEngine,
 
-storage: storageEngine,
-
-fileFilter: (req, file, cb) => {
-        if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
-            cb(null, true);
-        } else {
-            cb(null, false);
-            return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
-        }
+  fileFilter: (req, file, cb) => {
+    if (
+      file.mimetype == "image/png" ||
+      file.mimetype == "image/jpg" ||
+      file.mimetype == "image/jpeg"
+    ) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+      return cb(new Error("Only .png, .jpg and .jpeg format allowed!"));
     }
-
+  }
 });
-
 
 async function registerUser(req, res) {
   const { fName, lName, gender, age, email, username, password } = req.body;
- 
+
   const date = new Date();
 
   let newPath;
 
-  const url = req.protocol + '://' + req.get('host');
+  const url = req.protocol + "://" + req.get("host");
 
   if (req.file) {
     // const { originalname, path } = req.file;
@@ -56,8 +55,7 @@ async function registerUser(req, res) {
     // const ext = parts[parts.length - 1];
     //newPath = path + "." + ext;
     // fs.renameSync(path, newPath);
-    newPath =url +'uploads/' + req.file.filename;
-
+    newPath = url + "uploads/" + req.file.filename;
   } else {
     newPath = url + "/uploads/basic.png";
   }
@@ -83,7 +81,9 @@ async function registerUser(req, res) {
   const myEmail = await User.findOne({ email: email });
 
   if (myUser || myEmail) {
-    return res.status(200).json({ msg: "Username or Email Already Exists", errorCode:37 });
+    return res
+      .status(200)
+      .json({ msg: "Username or Email Already Exists", errorCode: 37 });
   }
 
   bcrypt.hash(password, 5, async (err, hash) => {
@@ -139,13 +139,11 @@ async function authUser(req, res) {
       (err, token) => {
         // Call Back
         if (err) throw err;
-        res.cookie("Login", token,{sameSite:'None', secure:true}).json({
-
+        res.cookie("Login", token, { sameSite: "None", secure: true }).json({
           id: userFound._id,
           username: userFound.username,
           pfp: userFound.pfp
         });
-
       }
     );
   } else {
@@ -174,8 +172,7 @@ async function profile(req, res) {
 }
 
 async function logout(req, res) {
-  res.cookie("Login", "",{sameSite:'None', secure:true}).json("ok");
-
+  res.cookie("Login", "", { sameSite: "None", secure: true }).json("ok");
 }
 
 async function createPost(req, res) {
@@ -187,7 +184,7 @@ async function createPost(req, res) {
   // fs.renameSync(path, newPath);
 
   let newPath;
-  const url = req.protocol + '://' + req.get('host');
+  const url = req.protocol + "://" + req.get("host");
 
   if (req.file) {
     // const { originalname, path } = req.file;
@@ -195,9 +192,8 @@ async function createPost(req, res) {
     // const ext = parts[parts.length - 1];
     // newPath = path + "." + ext;
     // fs.renameSync(path, newPath);
-    newPath = url + '/uploads/' + req.file.filename
-
-  } 
+    newPath = url + "/uploads/" + req.file.filename;
+  }
 
   if (Login) {
     jwt.verify(Login, process.env.SECRET_STRING, {}, async (err, info) => {
@@ -254,7 +250,7 @@ async function getPost(req, res) {
 async function updatePost(req, res) {
   let newPath = null;
 
-const url = req.protocol + '://' + req.get('host');
+  const url = req.protocol + "://" + req.get("host");
 
   if (req.file) {
     // const { originalname, path } = req.file;
@@ -262,8 +258,7 @@ const url = req.protocol + '://' + req.get('host');
     // const ext = parts[parts.length - 1];
     // newPath = path + "." + ext;
     // fs.renameSync(path, newPath);
-    newPath = url + '/uploads/' + req.file.filename
-
+    newPath = url + "/uploads/" + req.file.filename;
   }
 
   const { Login } = req.cookies;
@@ -441,16 +436,15 @@ async function editUser(req, res) {
     res.json("ok");
   } else if (req.file) {
     let newPath;
-    const url = req.protocol + '://' + req.get('host');
-  if (req.file) {
-    // const { originalname, path } = req.file;
-    // const parts = originalname.split(".");
-    // const ext = parts[parts.length - 1];
-    // newPath = path + "." + ext;
-    // fs.renameSync(path, newPath);
-    newPath = url + '/uploads/' + req.file.filename
-
-  }
+    const url = req.protocol + "://" + req.get("host");
+    if (req.file) {
+      // const { originalname, path } = req.file;
+      // const parts = originalname.split(".");
+      // const ext = parts[parts.length - 1];
+      // newPath = path + "." + ext;
+      // fs.renameSync(path, newPath);
+      newPath = url + "/uploads/" + req.file.filename;
+    }
 
     await user.updateOne({ pfp: newPath });
     res.json("ok");
@@ -501,7 +495,7 @@ async function resetPassword(req, res) {
         // Call Back
         if (err) throw err;
 
-        res.cookie("reset", token,{sameSite:'None', secure:true}).json({
+        res.cookie("reset", token, { sameSite: "None", secure: true }).json({
           id: userFound._id,
           username: userFound.username
         });
@@ -522,30 +516,27 @@ async function setPassword(req, res) {
   const { reset } = req.cookies;
   const { id, password } = req.body;
 
-  if(reset){
-  
+  if (reset) {
     jwt.verify(reset, process.env.SECRET_STRING, {}, async (err, token) => {
       if (err) throw err;
-  
+
       const user = await User.findOne({ _id: id });
-  
+
       bcrypt.hash(password, 5, async (err, hash) => {
         if (err) {
           return res.status(400).json({ msg: "Error: Password was not saved" });
         }
-  
+
         await user.updateOne({ password: hash });
-  
-  
-        res.cookie(reset, "",{sameSite:'None', secure:true});
-  
+
+        res.cookie(reset, "", { sameSite: "None", secure: true });
+
         res.json({ msg: "Updated Successfully", statusCode: 1 });
       });
-    });}else{
-
-      res.json({ msg: "Error", statusCode: 15 })
-
-    }
+    });
+  } else {
+    res.json({ msg: "Error", statusCode: 15 });
+  }
 }
 
 async function checkLink(req, res) {
@@ -562,84 +553,56 @@ async function checkLink(req, res) {
   }
 }
 
-
-async function newPassword(req, res){
-
-
-const {Login} = req.cookies;
-
-const {old, newPassword, id} = req.body;
-
-console.log(old);
-console.log(newPassword);
-
-if(Login){
-
-jwt.verify(Login, process.env.SECRET_STRING,{}, async (err, info) =>{
-
-if (err) throw err;
-
-
-const user = await User.findOne({_id:id});
-
-
-const matchPassword = await bcrypt.compare(old , user.password);
-
-if(matchPassword){
-
-  bcrypt.hash(newPassword, 5, async (err, hash) => {
-      if (err) {
-        return res.status(400).json({ msg: "Error: Password was not saved" });
-      }
-
-      await user.updateOne({ password: hash });
-
-      res.json({ msg: "Updated Successfully", statusCode: 1 });
-    });
-
-
-}else
-
-res.json({msg:'The Old Password is not correct', statusCode:15});
-
-});
-}else{
-
-res.json({msg:'Token Error', statusCode:15});
-
-}
-
-}
-
-
-async function profilePic(req, res){
-
+async function newPassword(req, res) {
   const { Login } = req.cookies;
 
-  if(Login){
+  const { old, newPassword, id } = req.body;
 
-    jwt.verify(Login, process.env.SECRET_STRING,{}, async (err,info)=>{
+  console.log(old);
+  console.log(newPassword);
 
-      if (err) throw err
+  if (Login) {
+    jwt.verify(Login, process.env.SECRET_STRING, {}, async (err, info) => {
+      if (err) throw err;
 
-        const user = await User.findOne({_id:info.id});
+      const user = await User.findOne({ _id: id });
 
+      const matchPassword = await bcrypt.compare(old, user.password);
 
-        res.json(user.pfp);
+      if (matchPassword) {
+        bcrypt.hash(newPassword, 5, async (err, hash) => {
+          if (err) {
+            return res
+              .status(400)
+              .json({ msg: "Error: Password was not saved" });
+          }
 
+          await user.updateOne({ password: hash });
 
+          res.json({ msg: "Updated Successfully", statusCode: 1 });
+        });
+      } else
+        res.json({ msg: "The Old Password is not correct", statusCode: 15 });
     });
-
-
-
-  }else{
-
-    res.json(0);
-
-
+  } else {
+    res.json({ msg: "Token Error", statusCode: 15 });
   }
+}
 
+async function profilePic(req, res) {
+  const { Login } = req.cookies;
 
+  if (Login) {
+    jwt.verify(Login, process.env.SECRET_STRING, {}, async (err, info) => {
+      if (err) throw err;
+
+      const user = await User.findOne({ _id: info.id });
+
+      res.json(user.pfp);
+    });
+  } else {
+    res.json(0);
+  }
 }
 
 module.exports = {
