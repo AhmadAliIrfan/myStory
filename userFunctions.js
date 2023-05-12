@@ -418,7 +418,7 @@ async function postStatus(req, res) {
 //------------------------------------------------------------------------------------
 
 async function editUser(req, res) {
-  const { fName, lName, age, email, id } = req.body;
+  const { fName, lName, age, email, id, pfp } = req.body;
   const user = await User.findOne({ _id: id }, { password: 0 });
   if (fName) {
     await user.updateOne({
@@ -434,19 +434,19 @@ async function editUser(req, res) {
   } else if (email) {
     await user.updateOne({ email: email });
     res.json("ok");
-  } else if (req.file) {
-    let newPath;
-    const url = req.protocol + "://" + req.get("host");
-    if (req.file) {
-      // const { originalname, path } = req.file;
-      // const parts = originalname.split(".");
-      // const ext = parts[parts.length - 1];
-      // newPath = path + "." + ext;
-      // fs.renameSync(path, newPath);
-      newPath = url + "/uploads/" + req.file.filename;
-    }
+  } else if (pfp) {
+    // let newPath;
+    // const url = req.protocol + "://" + req.get("host");
+    // if (req.file) {
+    //   const { originalname, path } = req.file;
+    //   const parts = originalname.split(".");
+    //   const ext = parts[parts.length - 1];
+    //   newPath = path + "." + ext;
+    //   fs.renameSync(path, newPath);
+    //   newPath = url + "/uploads/" + req.file.filename;
+    // }
 
-    await user.updateOne({ pfp: newPath });
+    await user.updateOne({ pfp: pfp });
     res.json("ok");
   }
 }
